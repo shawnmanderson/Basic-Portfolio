@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Olympic Rings CSS Positioning</title>
+    <style>
+        .container {
+            position: relative;
+            padding-top: 50%;
+        }
+        .ring {
+            width: 30%;
+            height: 60%;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .ringupper {
+            top: 0;            
+        }
+        .ringlower {
+            top: 30%;
+        }
+        .ring1 {
+            border: 4px solid blue;
+        }
+        .ring2 {
+            left: 33.33%;
+            border: 4px solid black;
+       }
+        .ring3 {
+            left: 66.66%;
+            border: 4px solid red;
+        }
+        .ring4 {
+            left: 16.65%;
+            border: 4px solid yellow;
+        }
+        .ring5 {
+            left: 50%;
+            border: 4px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="ring ring1 ringupper"></div>
+        <div class="ring ring2 ringupper"></div>
+        <div class="ring ring3 ringupper"></div>
+        <div class="ring ring4 ringlower"></div>
+        <div class="ring ring5 ringlower"></div>
+    </div>
+</body>
+
+</html>
