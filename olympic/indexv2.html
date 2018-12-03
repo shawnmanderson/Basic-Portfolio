@@ -9,19 +9,19 @@
     <style>
         .container {
             position: relative;
-            padding-top: 50%;
+            padding-top: 100%; /* 1:1 ratio, square ratio */
         }
         .ring {
-            width: 30%;
-            height: 60%;
-            border-radius: 50%;
+            width: 30%;  /* 1/3rd width/height of a box = perfect circle */
+            height: 30%; /* if these were exactly 33.33% the circles would overlap */
+            border-radius: 50%; /* 50% for a circle */
             position: absolute;
         }
         .ringupper {
             top: 0;            
         }
         .ringlower {
-            top: 30%;
+            top: 15%; /* half of 30% height = exact middle */
         }
         .ring1 {
             border: 4px solid blue;
@@ -35,7 +35,7 @@
             border: 4px solid red;
         }
         .ring4 {
-            left: 16.65%;
+            left: 16.66%; /* half of 33.33% */
             border: 4px solid yellow;
         }
         .ring5 {
@@ -54,3 +54,5 @@
         <div class="ring ring5 ringlower"></div>
     </div>
 </body>
+
+</html>
