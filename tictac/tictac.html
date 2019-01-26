@@ -19,8 +19,8 @@
         }
 
         .tic-box {
-            border: solid black 1px;
-            font-size: 12vw;
+            border: solid black 2px;
+            font-size: 14vw;
             background: #6AB187;
             text-align: center;
             color: lavender;
@@ -39,20 +39,23 @@
             <div class="col-12 col-sm-12">
                 <div class="container tic-container">
                     <div class="row tic-row">
+
                         <div class="col-4 tic-box" id="one">&nbsp;</div>
                         <div class="col-4 tic-box" id="two">&nbsp;</div>
                         <div class="col-4 tic-box" id="three">&nbsp;</div>
                     </div>
                     <div class="row tic-row">
+
                         <div class="col-4 tic-box" id="four">&nbsp;</div>
                         <div class="col-4 tic-box" id="five">&nbsp;</div>
                         <div class="col-4 tic-box" id="six">&nbsp;</div>
+
                     </div>
                     <div class="row tic-row">
 
-                        <div class="col-4 tic-box" id="seven">&nbsp;</div>
-                        <div class="col-4 tic-box" id="eight">&nbsp;</div>
+                        <div class="col-4 tic-box" id="seven">&nbsp;</div><div class="col-4 tic-box" id="eight">&nbsp;</div>
                         <div class="col-4 tic-box" id="nine">&nbsp;</div>
+
                     </div>
                 </div>
             </div>
@@ -126,7 +129,22 @@
             //   set gameIsOver to true
             // But what about all the other conditions? We could explicitly check all 8 possible conditions
             // Are there any other ways to do it more efficiently? (DRY = don't repeat yourself)
+            var winner = "";
+            var tie = false;
+            var spaces = 0;
+            var board = [];
+            //check for all possible wins
+            board[0] = grid["one"].textContent;
+            board[1] = grid["two"].textContent;
+            board[2] = grid["three"].textContent;
+            board[3] = grid["four"].textContent;
+            board[4] = grid["five"].textContent;
+            board[5] = grid["six"].textContent;
+            board[6] = grid["seven"].textContent;
+            board[7] = grid["eight"].textContent;
+            board[8] = grid["nine"].textContent;
 
+            //what do I do next?? Not sure... i might need help
         }
 
         document.onmousedown= function(event) {
