@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    Console = Magic
+  </title>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+      var countVowels = function(value) {
+        //var vowels = ['a', 'i', 'e', 'o', 'u'];
+        var counter = 0;
+
+        for(var i = 0; i < value.length; i++) {
+           if(value[i] === 'a' || value[i] === 'i'){
+             counter++;
+           }
+        }
+
+        console.log(counter);
+      };
+
+
+      // Write a function that takes in a string and outputs the number of vowels 
+      // (not counting y).
+
+      // Ex:
+      // Input: "hello"
+      // Output: 2
+      countVowels("hello");
+
+      // Input: "you are great!"
+      countVowels("you are great!");
+      // Output: 6
+
+      // Input: "why?"
+      countVowels("why?");
+      // Output: 0
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+    <style>
+
+
+        .tic-panel {
+            border: solid 2px black;
+            margin: .4vw 0;
+            background: #66A5AD;
+            padding: .4vw;
+        }
+
+        .tic-box {
+            border: solid black 1px;
+            font-size: 12vw;
+            background: #6AB187;
+            text-align: center;
+            color: lavender;
+        }
+
+        .tic-box:hover {
+            background: #20948B;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <div class="container tic-container">
+                    <div class="row tic-row">
+                        <div class="col-4 tic-box" id="one">&nbsp;</div>
+                        <div class="col-4 tic-box" id="two">&nbsp;</div>
+                        <div class="col-4 tic-box" id="three">&nbsp;</div>
+                    </div>
+                    <div class="row tic-row">
+                        <div class="col-4 tic-box" id="four">&nbsp;</div>
+                        <div class="col-4 tic-box" id="five">&nbsp;</div>
+                        <div class="col-4 tic-box" id="six">&nbsp;</div>
+                    </div>
+                    <div class="row tic-row">
+
+                        <div class="col-4 tic-box" id="seven">&nbsp;</div>
+                        <div class="col-4 tic-box" id="eight">&nbsp;</div>
+                        <div class="col-4 tic-box" id="nine">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var grid = [];
+
+        //this array acts as a quick access to the 9 <div> elements on the page, so we can set the textContext
+        grid["one"] = document.getElementById("one");
+        grid["two"] = document.getElementById("two");
+        grid["three"] = document.getElementById("three");
+        grid["four"] = document.getElementById("four");
+        grid["five"] = document.getElementById("five");
+        grid["six"] = document.getElementById("six");
+        grid["seven"] = document.getElementById("seven");
+        grid["eight"] = document.getElementById("eight");
+        grid["nine"] = document.getElementById("nine");
+        
+        //Each time the page loads, all 9 spaces are available. As each move is made, these items are removed from 
+        //this array. If this array is empty, we are out of moves and the game is over.
+        var availableMoves = ["one","two","three","four","five","six","seven","eight","nine"];
+        
+        //initially, the game is not over! but a win condition might make it over.
+        var gameIsOver = false;
+
+
+        addMove = function(gridLocation, value) {
+            //find the location of the move in the array            
+            var index = availableMoves.indexOf(gridLocation);
+            //one last safety check - do we have this index?
+            if (index !== -1) {
+                //Great! splice will remove this element from the array
+                availableMoves.splice(index, 1);
+                //now, set the textContent of the <div> element to the value
+                grid[gridLocation].textContent = value;
+            }
+        }
+
+        addPlayerMove = function(gridTarget) {        
+            //gridTarget represents the <div> element, and it has an "id" which will be "one", "two", "three", etc. 
+            //based on what the user clicked on. 
+            //This first if statement is "defensive" coding. Let's make sure we havea real object
+            if(gridTarget !== undefined && gridTarget.id !== undefined) {
+                //okay great - is the "id" the user clicked on in the list of available moves?
+                var index = availableMoves.indexOf(gridTarget.id);
+                if(index !== -1) {
+                    //Yes, the index was found in the availableMoves
+                    addMove(gridTarget.id, "X")
+                    return true; //this was a valid move, so return true
+                }
+            }
+            return false; //if we got here, this was not a valid move. return false.
+        }
+
+        addComputerMove = function() {
+            //Pick a random "available" square out of the availableMoves array
+            var computerMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+            //The computer is always Os
+            addMove(computerMove, "O");
+        }
+
+        checkForWinner = function() {
+
+            //how can we determine if there is a winner?
+            //how about something like this? psuedo code....
+            //if grid["one"].textContent === grid["two"].textContent && grid["one"].textContent === grid["three"].textContent 
+            //   then the top row is all the same, and we have a winner. 
+            //   alert The winner is .textContent
+            //   set gameIsOver to true
+            // But what about all the other conditions? We could explicitly check all 8 possible conditions
+            // Are there any other ways to do it more efficiently? (DRY = don't repeat yourself)
+
+        }
+
+        document.onmousedown= function(event) {
+            if(availableMoves.length <= 0) {
+                gameIsOver = true;
+            }
+            if(gameIsOver === true) {
+                alert("Game is over! Refresh to play again.")
+                return;
+            }
+
+            //the player clicked on a square... did they make a valid move?
+            //event.target represents the HTML element the user clicked, in this case, the "div"
+            //let's see if that is a valid move before let the computer take a turn
+            var playerMoveValid = addPlayerMove(event.target);            
+            if(playerMoveValid === true) {
+                //Okay the player move was good, now its the computers turn
+                addComputerMove();
+            }           
+            checkForWinner();
+        };
+
+    </script>
+</body>
+
+</html>

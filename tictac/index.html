@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      Console = Magic
+    </title>
+  </head>
+  <body>
+    <script type="text/javascript">
+        var conditionOne = true;
+        var conditionTwo = false;
+        var conditionThree = true;
+
+        if(conditionOne && conditionTwo) {
+            console.log("conditionOne and conditionTwo are true");
+        }
+        else if(conditionThree)
+        {
+            console.log("conditionThree is true, but only if conditionOne OR conditionTwo are false")
+        }
+
+        if(conditionOne) {
+            if(conditionTwo) {
+                console.log("conditionOne and conditionTwo are true");
+            }
+        }
+        else if(conditionThree)
+        {
+            console.log("conditionThree is true, but only when conditionOne is false")
+        }
+    </script>
+  </body>
+</html>
