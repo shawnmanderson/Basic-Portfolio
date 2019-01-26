@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
         crossorigin="anonymous">
     <style>
-
-
         .tic-panel {
             border: solid 2px black;
             margin: .4vw 0;
@@ -19,8 +17,8 @@
         }
 
         .tic-box {
-            border: solid black 1px;
-            font-size: 12vw;
+            border: solid black 4px;
+            font-size: 16vw;
             background: #6AB187;
             text-align: center;
             color: lavender;
@@ -49,7 +47,6 @@
                         <div class="col-4 tic-box" id="six">&nbsp;</div>
                     </div>
                     <div class="row tic-row">
-
                         <div class="col-4 tic-box" id="seven">&nbsp;</div>
                         <div class="col-4 tic-box" id="eight">&nbsp;</div>
                         <div class="col-4 tic-box" id="nine">&nbsp;</div>
@@ -72,16 +69,16 @@
         grid["seven"] = document.getElementById("seven");
         grid["eight"] = document.getElementById("eight");
         grid["nine"] = document.getElementById("nine");
-        
+
         //Each time the page loads, all 9 spaces are available. As each move is made, these items are removed from 
         //this array. If this array is empty, we are out of moves and the game is over.
-        var availableMoves = ["one","two","three","four","five","six","seven","eight","nine"];
-        
+        var availableMoves = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+
         //initially, the game is not over! but a win condition might make it over.
         var gameIsOver = false;
 
 
-        addMove = function(gridLocation, value) {
+        addMove = function (gridLocation, value) {
             //find the location of the move in the array            
             var index = availableMoves.indexOf(gridLocation);
             //one last safety check - do we have this index?
@@ -93,14 +90,14 @@
             }
         }
 
-        addPlayerMove = function(gridTarget) {        
+        addPlayerMove = function (gridTarget) {
             //gridTarget represents the <div> element, and it has an "id" which will be "one", "two", "three", etc. 
             //based on what the user clicked on. 
             //This first if statement is "defensive" coding. Let's make sure we havea real object
-            if(gridTarget !== undefined && gridTarget.id !== undefined) {
+            if (gridTarget !== undefined && gridTarget.id !== undefined) {
                 //okay great - is the "id" the user clicked on in the list of available moves?
                 var index = availableMoves.indexOf(gridTarget.id);
-                if(index !== -1) {
+                if (index !== -1) {
                     //Yes, the index was found in the availableMoves
                     addMove(gridTarget.id, "X")
                     return true; //this was a valid move, so return true
@@ -109,14 +106,14 @@
             return false; //if we got here, this was not a valid move. return false.
         }
 
-        addComputerMove = function() {
+        addComputerMove = function () {
             //Pick a random "available" square out of the availableMoves array
             var computerMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
             //The computer is always Os
             addMove(computerMove, "O");
         }
 
-        checkForWinner = function() {
+        checkForWinner = function () {
 
             //how can we determine if there is a winner?
             //how about something like this? psuedo code....
@@ -126,14 +123,63 @@
             //   set gameIsOver to true
             // But what about all the other conditions? We could explicitly check all 8 possible conditions
             // Are there any other ways to do it more efficiently? (DRY = don't repeat yourself)
+            var winner = "";
+            var tie = false;
+            var spaces = 0;
+            var board = [];
+            //check for all possible wins
+            board[0] = grid["one"].textContent;
+            board[1] = grid["two"].textContent;
+            board[2] = grid["three"].textContent;
+            board[3] = grid["four"].textContent;
+            board[4] = grid["five"].textContent;
+            board[5] = grid["six"].textContent;
+            board[6] = grid["seven"].textContent;
+            board[7] = grid["eight"].textContent;
+            board[8] = grid["nine"].textContent;
 
-        }
+            //diag first, hard to do in a loop
+            if (board[0] === board[4] && board[0] === board[8]) {
+                winner = board[0];
+            } else if (board[2] === board[4] && board[2] === board[6]) {
+                winner = board[2];
+            }
 
-        document.onmousedown= function(event) {
-            if(availableMoves.length <= 0) {
+            for (var i = 0; i < 9; i++) {
+                //across
+                if (winner === "") {
+                    if (i === 0 || i === 3 || i === 6) {
+                        if (board[i] === board[i + 1] && board[i] === board[i + 2]) {
+                            winner = board[i];
+                        }
+                    }
+                }
+                //down
+                if (winner === "") {
+                    if (i === 0 || i === 1 || i === 2) {
+                        if (board[i] === board[i + 3] && board[i] === board[i + 6]) {
+                            winner = board[i];
+                        }
+                    }
+                }
+                spaces++;
+            }
+
+            if (spaces === 9 && winner === "") {
+                tie = true;
+            }
+
+            if(winner.trim() !== "") {
+                alert(winner + "'s WIN THE GAME GOOD JOB!!!!");
                 gameIsOver = true;
             }
-            if(gameIsOver === true) {
+        }
+
+        document.onmousedown = function (event) {
+            if (availableMoves.length <= 0) {
+                gameIsOver = true;
+            }
+            if (gameIsOver === true) {
                 alert("Game is over! Refresh to play again.")
                 return;
             }
@@ -141,12 +187,13 @@
             //the player clicked on a square... did they make a valid move?
             //event.target represents the HTML element the user clicked, in this case, the "div"
             //let's see if that is a valid move before let the computer take a turn
-            var playerMoveValid = addPlayerMove(event.target);            
-            if(playerMoveValid === true) {
+            var playerMoveValid = addPlayerMove(event.target);
+            checkForWinner();
+            if (playerMoveValid === true && gameIsOver !== true) {
                 //Okay the player move was good, now its the computers turn
                 addComputerMove();
-            }           
-            checkForWinner();
+                checkForWinner();
+            }
         };
 
     </script>
